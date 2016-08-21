@@ -5,6 +5,8 @@
  */
 package interfaz;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author USUARIO
@@ -34,7 +36,7 @@ public class principal extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtdescuento5 = new javax.swing.JTextField();
+        txtDescuento5 = new javax.swing.JTextField();
         txtDescuento4 = new javax.swing.JTextField();
         txtDescuento1 = new javax.swing.JTextField();
         txtSueldoFinal = new javax.swing.JTextField();
@@ -47,7 +49,7 @@ public class principal extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Vrinda", 1, 18)); // NOI18N
-        jLabel1.setText("5. Descuento sobre el sueldo");
+        jLabel1.setText("5. Descuentos sobre el sueldo");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
@@ -73,21 +75,115 @@ public class principal extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
         jLabel7.setText("Sueldo final");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
-        getContentPane().add(txtdescuento5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, 100, 30));
+
+        txtDescuento5.setEditable(false);
+        getContentPane().add(txtDescuento5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, 100, 30));
+
+        txtDescuento4.setEditable(false);
         getContentPane().add(txtDescuento4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, 100, 30));
+
+        txtDescuento1.setEditable(false);
         getContentPane().add(txtDescuento1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 100, 30));
+
+        txtSueldoFinal.setEditable(false);
         getContentPane().add(txtSueldoFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 280, 100, 30));
+
+        txtSueldoBase.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtSueldoBaseKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtSueldoBase, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 100, 30));
 
         cmdBorrar.setText("Limpiar");
-        getContentPane().add(cmdBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 70, 30));
+        cmdBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdBorrarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cmdBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 330, 70, 30));
 
         cmdCalcular.setText("Calcular");
-        getContentPane().add(cmdCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 80, 30));
+        cmdCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdCalcularActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cmdCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 80, 30));
+
+        txtDescuento05.setEditable(false);
         getContentPane().add(txtDescuento05, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 100, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmdCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCalcularActionPerformed
+double d1, d2, d3, d4, total,totalf, base;
+String des1, des2, des3, des4, sfinal;
+
+    if(txtSueldoBase.getText().trim().isEmpty()){
+         JOptionPane.showMessageDialog(this, "Digite sueldo base","error", JOptionPane.ERROR_MESSAGE);
+         txtSueldoBase.requestFocusInWindow();
+         txtSueldoBase.selectAll();
+
+       }
+
+    else{
+        
+        base=Double.parseDouble(txtSueldoBase.getText());
+    
+        d1=(base*0.01);
+        d2=(base*0.04);
+        d3=(base*0.005);
+        d4=(base*0.05);
+        
+       total=(d1+d2+d3+d4);
+       totalf=(base-total);
+        
+        
+      des1=String.valueOf(d1);
+    txtDescuento1.setText (des1);    
+    
+    des2=String.valueOf(d2);
+    txtDescuento4.setText (des2);  
+    
+    des3=String.valueOf(d3);
+    txtDescuento05.setText(des3); 
+
+    des4=String.valueOf(d4);
+    txtDescuento5.setText(des4);  
+        
+    sfinal=String.valueOf(totalf);
+    txtSueldoFinal.setText(sfinal);
+        
+        
+    }
+
+
+    }//GEN-LAST:event_cmdCalcularActionPerformed
+
+    private void txtSueldoBaseKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSueldoBaseKeyTyped
+char c=evt.getKeyChar(); 
+       
+          if(!Character.isDigit(c)) {
+              
+              getToolkit().beep();    
+              evt.consume(); 
+          }
+              
+    }//GEN-LAST:event_txtSueldoBaseKeyTyped
+
+    private void cmdBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBorrarActionPerformed
+     txtSueldoBase.setText("");
+     txtDescuento1.setText("");
+     txtDescuento4.setText("");
+     txtDescuento05.setText("");
+     txtDescuento5.setText("");
+     txtSueldoFinal.setText("");
+     txtSueldoBase.requestFocusInWindow();
+
+        
+    }//GEN-LAST:event_cmdBorrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -137,8 +233,8 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JTextField txtDescuento05;
     private javax.swing.JTextField txtDescuento1;
     private javax.swing.JTextField txtDescuento4;
+    private javax.swing.JTextField txtDescuento5;
     private javax.swing.JTextField txtSueldoBase;
     private javax.swing.JTextField txtSueldoFinal;
-    private javax.swing.JTextField txtdescuento5;
     // End of variables declaration//GEN-END:variables
 }
